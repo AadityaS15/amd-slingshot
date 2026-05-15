@@ -1,7 +1,10 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY || "mock_key");
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+if (!apiKey) console.warn("VITE_GEMINI_API_KEY is not defined in environment variables!");
+
+const genAI = new GoogleGenerativeAI(apiKey || "mock_key");
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 export const analyzeFoodImage = async (base64Image) => {
   if (!import.meta.env.VITE_GEMINI_API_KEY) {
