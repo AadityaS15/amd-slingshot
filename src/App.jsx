@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Camera, Calendar, Flame, Award, BookOpen } from 'lucide-react';
 import { useAppContext } from './context/AppContext';
 import Scan from './pages/Scan';

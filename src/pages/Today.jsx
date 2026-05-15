@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { useMemo } from 'react';
+import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { useAppContext } from '../context/AppContext';
 
 export default function Today() {

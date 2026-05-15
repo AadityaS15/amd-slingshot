@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY || "mock_key");
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 export const analyzeFoodImage = async (base64Image) => {
   if (!import.meta.env.VITE_GEMINI_API_KEY) {
@@ -31,12 +31,13 @@ export const analyzeFoodImage = async (base64Image) => {
     
     Return ONLY valid JSON without any markdown formatting like \`\`\`json.`;
 
+    const mimeType = base64Image.substring(base64Image.indexOf(":") + 1, base64Image.indexOf(";"));
     const result = await model.generateContent([
       prompt,
       {
         inlineData: {
           data: base64Image.split(',')[1] || base64Image,
-          mimeType: base64Image.startsWith('data:image/jpeg') ? 'image/jpeg' : 'image/png'
+          mimeType: mimeType || 'image/jpeg'
         }
       }
     ]);
@@ -46,7 +47,7 @@ export const analyzeFoodImage = async (base64Image) => {
     return JSON.parse(cleanedJson);
   } catch (error) {
     console.error("Gemini Vision Error:", error);
-    throw new Error("Failed to analyze image");
+    throw new Error("Failed to analyze image", { cause: error });
   }
 };
 
@@ -88,6 +89,6 @@ export const generateMealPlan = async (userProfile) => {
     return JSON.parse(cleanedJson);
   } catch (error) {
     console.error("Gemini Meal Plan Error:", error);
-    throw new Error("Failed to generate meal plan");
+    throw new Error("Failed to generate meal plan", { cause: error });
   }
 };

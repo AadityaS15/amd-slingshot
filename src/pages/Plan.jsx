@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { jsPDF } from 'jspdf';
 import { ChevronDown, ChevronUp, Download, Sparkles } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
@@ -17,7 +17,7 @@ export default function Plan() {
       const plan = await generateMealPlan(userProfile);
       setMealPlan(plan);
       playSuccessSound();
-    } catch (error) {
+    } catch {
       alert("Failed to generate plan. Please try again.");
     }
     setLoading(false);
@@ -34,7 +34,7 @@ export default function Plan() {
     
     let yPos = 45;
     
-    mealPlan.days.forEach((day, index) => {
+    mealPlan.days.forEach((day) => {
       if (yPos > 260) {
         doc.addPage();
         yPos = 20;

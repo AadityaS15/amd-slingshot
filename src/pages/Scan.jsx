@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { Camera, Image as ImageIcon, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
@@ -31,7 +31,7 @@ export default function Scan() {
     try {
       const data = await analyzeFoodImage(base64);
       setResult(data);
-    } catch (error) {
+    } catch {
       alert("Failed to analyze image. Please try again.");
       setImagePreview(null);
     }

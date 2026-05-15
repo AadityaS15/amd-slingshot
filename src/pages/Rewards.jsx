@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Award, Gift, Target, CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppContext } from '../context/AppContext';
 import { playSuccessSound } from '../utils/audio';
 
 export default function Rewards() {
-  const { points, setPoints, meals } = useAppContext();
+  const { points, meals } = useAppContext();
   const [showBadgeUnlock, setShowBadgeUnlock] = useState(false);
   const [lastTier, setLastTier] = useState(0);
 
@@ -21,10 +21,11 @@ export default function Rewards() {
     else if (points >= 100) currentTier = 1;
 
     if (currentTier > lastTier && lastTier !== 0) {
-      setShowBadgeUnlock(true);
+      setTimeout(() => setShowBadgeUnlock(true), 0);
       playSuccessSound();
       setTimeout(() => setShowBadgeUnlock(false), 3000);
     }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLastTier(currentTier);
   }, [points, lastTier]);
 
